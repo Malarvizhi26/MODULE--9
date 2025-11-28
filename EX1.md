@@ -1,76 +1,57 @@
-## Ex.No:1
-## Ex.Name: Search Module of the B+ Tree
+## Ex.No:2
+## Ex.Name: Red-Black Tree Construction Module
 ## Date:
 ## Aim:
-To write a C++ program to implement the Search Module of a B+ Tree and verify whether a given key is present in the tree.
+To write a C++ program to construct a Red-Black Tree (RBT) and display its inorder traversal along with node colors.
 
 ## Algorithm:
-Start the program.
+1.Start the program.
 
-Construct a B+ Tree from the given set of keys.
+2.Define a Red-Black Tree node structure with:
 
-Insert keys level by level according to the rules of the B+ Tree.
+Data (key value)
+Color (0 = Black, 1 = Red)
 
-Display the B+ Tree level-wise after construction.
+3.Left and Right child pointers, Parent pointer.
 
-Read the search key.
+4.Insert nodes one by one into the tree following the Binary Search Tree (BST) property.
 
-Traverse the tree:
+5.After each insertion, perform fix-up operations to maintain Red-Black Tree properties:
+Root must always be black.
+No two red nodes can appear consecutively.
+Every path from root to leaf must contain the same number of black nodes.
+Perform rotations (Left Rotate, Right Rotate) and recoloring when violations occur.
 
-Compare the search key with the keys in the current node.
+6.Once all elements are inserted, perform Inorder Traversal to display:
+Node data
+Node color (0 = Black, 1 = Red).
 
-If found, return success.
-
-If not found, move to the appropriate child node.
-
-Continue until the leaf node is reached.
-
-If the key exists, display “Found” else display “Not Found”.
-
-Stop the program.
+7.Stop the program.
 
 ## Program:
 ```
-void BPTree::search(int x)
+node* bst(node* trav, node* temp)
 {
-    if (root == NULL)
+    if (trav == NULL)
+        return temp;
+    if (temp->d < trav->d)
     {
-    cout << "Tree is empty\n";
+        trav->l = bst(trav->l, temp);
+        trav->l->p = trav;
     }
-    else
+    else if (temp->d > trav->d)
     {
-        Node *cursor = root;
-        while (cursor->IS_LEAF == false) 
-        {
-            for (int i = 0; i < cursor->size; i++)
-            {
-                if (x < cursor->key[i])
-                {
-                    cursor = cursor->ptr[i];
-                    break;
-                }
-                if (i == cursor->size - 1) 
-                {
-                    cursor = cursor->ptr[i + 1];
-                    break;
-                }
-            }
-        }
-        for (int i = 0; i < cursor->size; i++)
-        {
-            if (cursor->key[i] == x)
-            {
-                cout << "Found\n";
-                return;
-            }
-         }
-        cout << "Not found\n";
+        trav->r = bst(trav->r, temp);
+        trav->r->p = trav;
     }
+    return trav;
 }
 ```
 ## Output:
 
-<img width="870" height="791" alt="image" src="https://github.com/user-attachments/assets/307bb103-8597-4ddd-8135-19a72c9fe627" />
+<img width="1348" height="861" alt="image" src="https://github.com/user-attachments/assets/91c92df4-50f2-44fe-b824-d37a28c04f03" />
+
+
 
 
 ## Result:
